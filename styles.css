@@ -4,6 +4,7 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: 50px;
+    position: relative; /* Add this line to create a positioning context */
 }
 
 header {
@@ -23,4 +24,10 @@ button {
 a {
     text-decoration: none;
     color: #4CAF50;
+}
+
+#contact-me {
+    position: absolute; /* Position absolutely within the positioned relative parent */
+    bottom: 20px; /* Distance from the bottom edge */
+    left: 20px; /* Distance from the left edge */
 }
