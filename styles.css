@@ -1,13 +1,32 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    position: relative; /* Add this line to create a positioning context */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+    font-family: "Poppins", sans-serif;
 }
-
-header {
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 10px;
+    border-radius: 7px;
+    width: 1900px;
+    height: 105px;
+    background: rgba(89, 8, 118, 0.75);
+}
+.header .head-text {
+    text-align: center;
+    font-size: 64px;
+}
+.footnote {
+    position: fixed;
+    bottom: 0;
+    left: 46.037vw;
+    right: 46.037vw;
+    padding: 2px;
+    border-radius: 7px;
+    background: rgba(89, 8, 118, 0.75);
+}
+.footnote .foot-text {
     text-align: center;
 }
 
