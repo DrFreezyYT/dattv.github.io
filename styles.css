@@ -30,23 +30,32 @@
     text-align: center;
 }
 
-button {
-    cursor: pointer;
-    margin-top: 50px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
+.img-one {
+    position: absolute;
+    margin-top: 200px;
+    margin-left: 115px;
+}
+
+.text-box-one {
+    position: absolute;
+    margin-top: 200px;
+    margin-left: 705px;
+    width: 1110px;
+    height: 550px;
+    border-radius: 7px;
+    background: rgba(24, 69, 16, 0.25); /* Fixed rgba format */
+    display: flex;  /* Using Flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.text-box-one-text {
+    /* If additional text styling is needed, it can go here */
+    color: white; /* Example: setting the text color */
+    font-size: 24px; /* Example: setting the font size */
 }
 
 a {
     text-decoration: none;
-    color: #4CAF50;
-}
-
-#contact-me {
-    position: absolute; /* Position absolutely within the positioned relative parent */
-    bottom: 20px; /* Distance from the bottom edge */
-    left: 20px; /* Distance from the left edge */
-}
+    color: rgb(39, 90, 255);
+  }
