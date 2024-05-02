@@ -2,6 +2,9 @@
 * {
     font-family: "Poppins", sans-serif;
 }
+body {
+    background: #131516;
+}
 .header {
     position: fixed;
     top: 0;
@@ -16,6 +19,7 @@
 .header .head-text {
     text-align: center;
     font-size: 64px;
+    color: white;
 }
 .footnote {
     position: fixed;
@@ -28,6 +32,7 @@
 }
 .footnote .foot-text {
     text-align: center;
+    color: white;
 }
 
 .img-one {
