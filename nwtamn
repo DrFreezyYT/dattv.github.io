@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antimatter Production Time Calculator</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f4;
+            --card-bg: #fff;
+            --text-color: #333;
+            --input-bg: #fff;
+            --input-border: #ddd;
+            --button-bg: #4CAF50;
+            --button-text: white;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="glass"] {
+            --bg-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --text-color: #fff;
+            --input-bg: rgba(255, 255, 255, 0.15);
+            --input-border: rgba(255, 255, 255, 0.3);
+            --button-bg: rgba(255, 255, 255, 0.2);
+            --button-text: #fff;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .calculator {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px var(--shadow);
+            width: 400px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="glass"] .calculator {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .calculator h2 {
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: var(--text-color);
+        }
+
+        .calculator label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--text-color);
+            text-align: left;
+        }
+
+        .calculator input, .calculator button {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            background: var(--input-bg);
+            color: var(--text-color);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .calculator input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+
+        .calculator button {
+            cursor: pointer;
+            background: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .calculator button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .result-item {
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        [data-theme="glass"] .calculator input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Glass effect animations */
+        [data-theme="glass"] .calculator:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌟 Toggle Glass Theme</button>
+    
+    <div class="calculator">
+        <h2>Antimatter Production Calculator</h2>
+        
+        <label for="mbInput">Enter mb/t (millibuckets per tick):</label>
+        <input type="number" id="mbInput" placeholder="e.g., 200" min="1" step="1">
+        
+        <label for="antimatterAmount">Enter desired antimatter amount (in mB):</label>
+        <input type="number" id="antimatterAmount" placeholder="e.g., 3000" min="1" step="1">
+        
+        <button onclick="calculateTime()">Calculate Production Requirements</button>
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        function calculateTime() {
+            const mbPerTick = parseFloat(document.getElementById('mbInput').value);
+            const antimatterAmount = parseFloat(document.getElementById('antimatterAmount').value);
+            
+            if (isNaN(mbPerTick) || mbPerTick <= 0 || isNaN(antimatterAmount) || antimatterAmount <= 0) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = "<div class='result-item'>Please enter valid positive numbers for mb/t and antimatter amount.</div>";
+                return;
+            }
+
+            // Production chain calculations
+            const poloniumRequired = antimatterAmount * 1000; // 1000 mB polonium for 1 mB antimatter
+            const nuclearWasteRequired = poloniumRequired * 10; // 10 mB nuclear waste for 1 mB polonium
+            const fissileRequired = nuclearWasteRequired * 10; // 10 mB fissile fuel for 1 mB nuclear waste
+            
+            const totalTicks = nuclearWasteRequired / mbPerTick;
+            const totalSeconds = totalTicks / 20; // Convert ticks to seconds
+
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = Math.floor(totalSeconds % 60);
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <div class="result-item">
+                    <span class="result-label">Fissile Fuel Required:</span> ${fissileRequired.toLocaleString()} mB
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Nuclear Waste Required:</span> ${nuclearWasteRequired.toLocaleString()} mB
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Polonium Required:</span> ${poloniumRequired.toLocaleString()} mB
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Production Time:</span> ${Math.floor(totalTicks).toLocaleString()} ticks
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Time Duration:</span> ${hours}h ${minutes}m ${seconds}s
+                </div>
+            `;
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            
+            if (currentTheme === 'glass') {
+                body.removeAttribute('data-theme');
+            } else {
+                body.setAttribute('data-theme', 'glass');
+            }
+        }
+
+        // Add some keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                calculateTime();
+            }
+            if (event.key === 'Escape') {
+                document.getElementById('result').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
